@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randonnées Enrichies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Randonnées</h1>
+    <table id="randonnees-table">
+        <thead>
+            <tr>
+                <th>Randonnée</th>
+                <th>Altitude (m)</th>
+                <th>Niveau</th>
+                <th>Temps</th>
+                <th>Dénivelé (m)</th>
+                <th>Distance (km)</th>
+                <th>Région</th>
+                <th>Départ</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données seront insérées ici par JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        fetch('randonnees_enrich.json')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#randonnees-table tbody');
+                data.forEach(rando => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${rando.randonnee}</td>
+                        <td>${rando.alt}</td>
+                        <td>${rando.niveaux}</td>
+                        <td>${rando.temps}</td>
+                        <td>${rando.deniv}</td>
+                        <td>${rando.kms}</td>
+                        <td>${rando.regions}</td>
+                        <td>${rando.depart}</td>
+                        <td><a href="${rando.url}" target="_blank">Lien</a></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Erreur lors du chargement du JSON:', error));
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">/home/matthieu/Documents/opotopo/index.html
