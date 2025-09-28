@@ -76,16 +76,18 @@
             </div>
         </div>
     </div>
-
-    <div class="container-fluid">
+    
+        
+        <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <p><b>Niveaux :</b> 👡 macheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur </p>
                 <table id="randonnees-table" class="display compact">
                     <thead>
                         <tr>
-                            <th>Randonnée</th>
                             <th>Altitude (m)</th>
                             <th>Niveau</th>
+                            <th>Randonnée</th>
                             <th>Temps</th>
                             <th>Dénivelé (m)</th>
                             <th>Distance (km)</th>
@@ -100,9 +102,9 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th><input type="text" placeholder="Filtrer Randonnée" class="form-control"></th>
                             <th><input type="number" placeholder="Min Altitude" class="form-control"></th>
-                            <th><select class="form-select"><option value="">Tous niveaux</option><option value="Facile">Facile</option><option value="Moyen">Moyen</option><option value="Difficile">Difficile</option><option value="Montagnard">Montagnard</option></select></th>
+                            <th><select class="form-select"></select></th>
+                            <th><input type="text" placeholder="Filtrer Randonnée" class="form-control"></th>
                             <th><input type="number" placeholder="Max Temps (min)" class="form-control"></th>
                             <th><input type="number" placeholder="Min Dénivelé" class="form-control"></th>
                             <th><input type="number" placeholder="Min Distance" class="form-control"></th>
@@ -151,9 +153,9 @@
                 data.forEach(rando => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${rando.randonnee}</td>
                         <td>${rando.alt}</td>
                         <td>${rando.niveaux}</td>
+                        <td>${rando.randonnee}</td>
                         <td>${rando.temps_minute}</td>
                         <td>${rando.deniv}</td>
                         <td>${rando.kms}</td>
@@ -170,6 +172,7 @@
 
                 // Initialiser DataTables avec Bootstrap
                 table = $('#randonnees-table').DataTable({
+                    responsive: true,
                     paging: true,
                     searching: true,
                     ordering: true,
