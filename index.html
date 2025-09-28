@@ -1,31 +1,24 @@
-<!DOCT    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <style>
+<style>
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
+            /* background-color: white; */
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            /* border-radius: 12px; */
+            /* box-shadow: 0 8px 32px rgba(0,0,0,0.1); */
         }
         .notebook-cell {
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            border-left: 5px solid #007bff;
+            /* background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            border-left: 5px solid #007bff; */
             padding: 20px;
             margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            /* border-radius: 8px; */
+            /* box-shadow: 0 2px 8px rgba(0,0,0,0.05); */
+            /* transition: transform 0.2s; */
         }
         .notebook-cell:hover {
             transform: translateY(-2px);
@@ -38,14 +31,14 @@
             border-color: #007bff !important;
             color: white !important;
         }
-        .table th {
-            background-color: #007bff;
-            color: white;
-            font-weight: 600;
+        /* .table th { */
+            /* background-color: #007bff; */
+            /* color: white; */
+            /* font-weight: 600;
         }
         .table td {
             vertical-align: middle;
-        }
+        } */
         .btn-primary {
             background-color: #28a745;
             border-color: #28a745;
@@ -54,39 +47,29 @@
             background-color: #218838;
             border-color: #1e7e34;
         }
-    </style>ng="fr">
+    </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OPOTOPO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <style>
-        body {
-            /* background-color: #f5f5f5; */
-        }
-        .notebook-cell {
-            /* background: #f7f7f7;
-            border-left: 4px solid #ccc; */
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-    </style>
+    <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="notebook-cell">
-                    <h1>Opotopo</h1>
-                    <p></p>
+                                <div class="notebook-cell">
+                                        <h1><i class="fas fa-mountain text-primary me-2"></i>🏔️ Liste des Randonnées Enrichies</h1>
                     <div id="region-filters" class="mt-3">
-                        <strong>Filtrer par Région :</strong>
+                        <strong><i class="fas fa-filter me-1"></i>Région :</strong>
                         <!-- Les boutons de région seront ajoutés ici par JavaScript -->
                     </div>
                 </div>
@@ -97,7 +80,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <table id="randonnees-table" class="table table-striped table-bordered">
+                <table id="randonnees-table" class="display compact">
                     <thead>
                         <tr>
                             <th>Randonnée</th>
@@ -108,6 +91,8 @@
                             <th>Distance (km)</th>
                             <th>Région</th>
                             <th>Vallées</th>
+                            <th>Piolet</th>
+                            <th>Crampons</th>
                             <th>N coms</th>
                             <th>Note</th>
                             <th>URL</th>
@@ -123,6 +108,8 @@
                             <th><input type="number" placeholder="Min Distance" class="form-control"></th>
                             <th></th>
                             <th><input type="text" placeholder="Filtrer Vallées" class="form-control"></th>
+                            <th><input type="number" placeholder="nb piolet" class="form-control"></th>
+                            <th><input type="number" placeholder="nb crampons" class="form-control"></th>
                             <th><input type="number" placeholder="Min Popularité" class="form-control"></th>
                             <th><input type="text" placeholder="Filtrer Note" class="form-control"></th>
                             <th></th>
@@ -172,6 +159,8 @@
                         <td>${rando.kms}</td>
                         <td>${rando.regions}</td>
                         <td>${rando.vallees}</td>
+                        <td>${rando.piolet}</td>
+                        <td>${rando.crampons}</td>
                         <td>${rando.n_com}</td>
                         <td>${rando.note ? rando.note.toFixed(1) : ''} ± ${rando.note_sd ? rando.note_sd.toFixed(1) : ''}</td>
                         <td><a href="${rando.url}" target="_blank">Lien</a></td>
@@ -186,7 +175,7 @@
                     ordering: true,
                     info: true,
                     language: {
-                        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json'
+                        url: '//cdn.datatables.net/plug-ins/2.3.4/i18n/fr-FR.json'
                     },
                     columnDefs: [
                         { targets: 6, visible: false } // Cacher la colonne Région (index 6)
@@ -239,9 +228,16 @@
                     table.column(6).search('').draw();
                 });
                 regionFilters.append(allButton);
+                // Collecter les niveaux uniques pour le select
+                var niveaux = [...new Set(data.map(r => r.niveaux))].sort();
+                var niveauSelect = $('select', table.column(2).footer());
+                niveauSelect.empty();
+                niveauSelect.append('<option value="">Tous niveaux</option>');
+                niveaux.forEach(function(niveau) {
+                    niveauSelect.append('<option value="' + niveau + '">' + niveau + '</option>');
+                })
             })
             .catch(error => console.error('Erreur lors du chargement du JSON:', error));
     </script>
 </body>
 </html></content>
-<parameter name="filePath">/home/matthieu/Documents/opotopo/index.html
