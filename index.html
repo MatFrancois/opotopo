@@ -72,6 +72,71 @@
                         <strong><i class="fas fa-filter me-1"></i>Région :</strong>
                         <!-- Les boutons de région seront ajoutés ici par JavaScript -->
                     </div>
+                    <div class="mt-3">
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters">
+                            <i class="fas fa-sliders-h me-1"></i>Filtres avancés
+                        </button>
+                    </div>
+                    <div class="collapse mt-3" id="advanced-filters">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Altitude (m)</label>
+                                    <input type="number" id="alt-min" placeholder="Min" class="form-control mb-2">
+                                    <input type="number" id="alt-max" placeholder="Max" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Niveau</label>
+                                    <select id="niveau-select" class="form-select"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Randonnée</label>
+                                    <input type="text" id="rando-filter" placeholder="Filtrer" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Temps (min)</label>
+                                    <input type="number" id="temps-max" placeholder="Max" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <label>Dénivelé (m)</label>
+                                    <input type="number" id="deniv-min" placeholder="Min" class="form-control mb-2">
+                                    <input type="number" id="deniv-max" placeholder="Max" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Distance (km)</label>
+                                    <input type="number" id="dist-min" placeholder="Min" class="form-control mb-2">
+                                    <input type="number" id="dist-max" placeholder="Max" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Vallées</label>
+                                    <input type="text" id="vallees-filter" placeholder="Filtrer" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Équipement</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="piolet-check">
+                                        <label class="form-check-label" for="piolet-check">Piolet requis</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="crampons-check">
+                                        <label class="form-check-label" for="crampons-check">Crampons requis</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <label>N commentaires (min)</label>
+                                    <input type="number" id="pop-min" placeholder="Min" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Note</label>
+                                    <input type="text" id="note-filter" placeholder="Filtrer" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,7 +146,6 @@
         <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <p><b>Niveaux :</b> 👡 macheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur </p>
                 <table id="randonnees-table" class="display compact">
                     <thead>
                         <tr>
@@ -100,27 +164,11 @@
                             <th>URL</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th><input type="number" placeholder="Min Altitude" class="form-control"></th>
-                            <th><select class="form-select"></select></th>
-                            <th><input type="text" placeholder="Filtrer Randonnée" class="form-control"></th>
-                            <th><input type="number" placeholder="Max Temps (min)" class="form-control"></th>
-                            <th><input type="number" placeholder="Min Dénivelé" class="form-control"></th>
-                            <th><input type="number" placeholder="Min Distance" class="form-control"></th>
-                            <th></th>
-                            <th><input type="text" placeholder="Filtrer Vallées" class="form-control"></th>
-                            <th><input type="number" placeholder="nb piolet" class="form-control"></th>
-                            <th><input type="number" placeholder="nb crampons" class="form-control"></th>
-                            <th><input type="number" placeholder="Min Popularité" class="form-control"></th>
-                            <th><input type="text" placeholder="Filtrer Note" class="form-control"></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         <!-- Les données seront insérées ici par JavaScript -->
                     </tbody>
                 </table>
+                <p><b>Niveaux :</b> 👡 macheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur </p>
             </div>
         </div>
     </div>
@@ -182,21 +230,78 @@
                     },
                     columnDefs: [
                         { targets: 6, visible: false } // Cacher la colonne Région (index 6)
-                    ],
-                    initComplete: function () {
-                        // Appliquer les filtres individuels
-                        this.api().columns().every(function () {
-                            var column = this;
-                            var input = $('input, select', column.footer());
-
-                            input.on('keyup change', function () {
-                                if (column.search() !== this.value) {
-                                    column.search(this.value).draw();
-                                }
-                            });
-                        });
-                    }
+                    ]
                 });
+
+                // Fonction pour appliquer les filtres
+                function applyFilters() {
+                    // Altitude
+                    var altMin = parseFloat($('#alt-min').val()) || -Infinity;
+                    var altMax = parseFloat($('#alt-max').val()) || Infinity;
+                    table.column(0).search(function(value, data, index) {
+                        var alt = parseFloat(value);
+                        return alt >= altMin && alt <= altMax;
+                    }, true, false);
+
+                    // Niveau
+                    var niveau = $('#niveau-select').val();
+                    table.column(1).search(niveau);
+
+                    // Randonnée
+                    var rando = $('#rando-filter').val();
+                    table.column(2).search(rando);
+
+                    // Temps
+                    var tempsMax = parseFloat($('#temps-max').val()) || Infinity;
+                    table.column(3).search(function(value, data, index) {
+                        var temps = parseFloat(value);
+                        return temps <= tempsMax;
+                    }, true, false);
+
+                    // Dénivelé
+                    var denivMin = parseFloat($('#deniv-min').val()) || -Infinity;
+                    var denivMax = parseFloat($('#deniv-max').val()) || Infinity;
+                    table.column(4).search(function(value, data, index) {
+                        var deniv = parseFloat(value);
+                        return deniv >= denivMin && deniv <= denivMax;
+                    }, true, false);
+
+                    // Distance
+                    var distMin = parseFloat($('#dist-min').val()) || -Infinity;
+                    var distMax = parseFloat($('#dist-max').val()) || Infinity;
+                    table.column(5).search(function(value, data, index) {
+                        var dist = parseFloat(value);
+                        return dist >= distMin && dist <= distMax;
+                    }, true, false);
+
+                    // Vallées
+                    var vallees = $('#vallees-filter').val();
+                    table.column(7).search(vallees);
+
+                    // Piolet
+                    var pioletChecked = $('#piolet-check').is(':checked');
+                    table.column(8).search(pioletChecked ? '^[1-9]\\d*$' : '', true, false);
+
+                    // Crampons
+                    var cramponsChecked = $('#crampons-check').is(':checked');
+                    table.column(9).search(cramponsChecked ? '^[1-9]\\d*$' : '', true, false);
+
+                    // Popularité
+                    var popMin = parseFloat($('#pop-min').val()) || -Infinity;
+                    table.column(10).search(function(value, data, index) {
+                        var pop = parseFloat(value);
+                        return pop >= popMin;
+                    }, true, false);
+
+                    // Note
+                    var note = $('#note-filter').val();
+                    table.column(11).search(note);
+
+                    table.draw();
+                }
+
+                // Attacher les événements
+                $('#advanced-filters input, #advanced-filters select').on('input change', applyFilters);
 
                 // Collecter les régions uniques et créer des boutons
                 var regions = [...new Set(data.map(r => r.regions))].sort();
@@ -233,7 +338,7 @@
                 regionFilters.append(allButton);
                 // Collecter les niveaux uniques pour le select
                 var niveaux = [...new Set(data.map(r => r.niveaux))].sort();
-                var niveauSelect = $('select', table.column(2).footer());
+                var niveauSelect = $('#niveau-select');
                 niveauSelect.empty();
                 niveauSelect.append('<option value="">Tous niveaux</option>');
                 niveaux.forEach(function(niveau) {
