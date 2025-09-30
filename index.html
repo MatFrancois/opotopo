@@ -320,7 +320,7 @@
                     },
                     paging: true,
                     searching: true,
-                    ordering: true,
+                    ordering: false,
                     info: true,
                     scrollX: true,
                     autoWidth: true,
@@ -329,14 +329,14 @@
                         // { targets: 2, width: '25%' },
                         // { targets: 11, width: '120px' },
                         // { targets: 12, width: '80px' },
-                        { responsivePriority: 3, targets: 0 },  // Altitude
-                        { responsivePriority: 2, targets: 1 },  // Niveau
+                        { responsivePriority: 1, targets: 1 },  // Niveau
                         { responsivePriority: 1, targets: 2 },  // Randonnée
-                        { responsivePriority: 2, targets: 3 },  // Temps
                         { responsivePriority: 1, targets: 4 },  // Dénivelé
                         { responsivePriority: 1, targets: 5 },  // Distance
-                        { responsivePriority: 3, targets: 10 }, // N coms
                         { responsivePriority: 1, targets: 11 }, // Note
+                        { responsivePriority: 2, targets: 3 },  // Temps
+                        { responsivePriority: 3, targets: 0 },  // Altitude
+                        { responsivePriority: 3, targets: 10 }, // N coms
                         { responsivePriority: 10, targets: 7 }, // Vallées (minimisé)
                         { responsivePriority: 11, targets: 8 }, // Piolet (minimisé)
                         { responsivePriority: 12, targets: 9 }, // Crampons (minimisé)
