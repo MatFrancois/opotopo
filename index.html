@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPOTOPO - Randonnées Pyrénées</title>
+    <title>OPOTOPO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css" />
@@ -12,204 +12,46 @@
     <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            background: #fafafa;
-            color: #2c3e50;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-
         .container-fluid {
             max-width: 100%;
             margin: 0 auto;
             padding: 20px 40px;
         }
-
-        /* Header */
-        header {
-            background: white;
-            border-bottom: 1px solid #e1e8ed;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
+        .notebook-cell {
+            padding: 20px;
+            margin: 20px 0;
         }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-            margin: 0;
-            color: #2c3e50;
+        .notebook-cell:hover {
+            transform: translateY(-2px);
         }
-
-        h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Filters */
-        .filter-section {
-            margin-bottom: 1rem;
-        }
-
-        .filter-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #657786;
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .region-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
         .region-btn {
-            background: white;
-            border: 1px solid #e1e8ed;
-            color: #2c3e50;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s;
         }
-
-        .region-btn:hover {
-            border-color: #2c3e50;
-            background: #f7f9fa;
-        }
-
         .region-btn.active {
-            background: #2c3e50;
-            color: white;
-            border-color: #2c3e50;
+            background-color: #007bff !important;
+            border-color: #007bff !important;
+            color: white !important;
         }
-
-        .btn-toggle {
-            background: #2c3e50;
-            color: white;
-            border: none;
-            padding: 0.625rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
         }
-
-        .btn-toggle:hover {
-            background: #1a252f;
-        }
-
-        .btn-reset {
-            background: white;
-            color: #657786;
-            border: 1px solid #e1e8ed;
-            padding: 0.625rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-left: 0.5rem;
-        }
-
-        .btn-reset:hover {
-            border-color: #2c3e50;
-            color: #2c3e50;
-        }
-
-        /* Form inputs */
-        .form-control, .form-select {
-            border: 1px solid #e1e8ed;
-            border-radius: 6px;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #2c3e50;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
-        }
-
-        label {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: #657786;
-            margin-bottom: 0.375rem;
-        }
-
-        /* Table */
-        .table-container {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 8px;
-            padding: 1.5rem;
-            overflow-x: auto;
-        }
-
-        table.dataTable {
-            width: 100% !important;
-            border-collapse: collapse;
-            font-size: 0.875rem;
-        }
-
-        table.dataTable thead th {
-            background: #fafafa;
-            border-bottom: 2px solid #e1e8ed;
-            color: #657786;
-            font-weight: 500;
-            padding: 0.875rem 0.75rem;
-            text-align: left;
-            font-size: 0.8125rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        table.dataTable tbody td {
-            padding: 0.875rem 0.75rem;
-            border-bottom: 1px solid #f0f3f5;
-            color: #2c3e50;
-            white-space: nowrap;
-        }
-
-        table.dataTable tbody tr:hover {
-            background: #fafafa;
-        }
-
-        table.dataTable tbody tr:last-child td {
-            border-bottom: none;
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
         }
 
         /* Responsive details styling */
         table.dataTable tbody td.child {
-            background: #fafafa;
+            background: #f8f9fa;
             padding: 1rem;
         }
 
@@ -221,7 +63,7 @@
 
         table.dataTable tbody td.child ul li {
             padding: 0.5rem 0;
-            border-bottom: 1px solid #e1e8ed;
+            border-bottom: 1px solid #dee2e6;
         }
 
         table.dataTable tbody td.child ul li:last-child {
@@ -230,276 +72,214 @@
 
         table.dataTable tbody td.child span.dtr-title {
             font-weight: 600;
-            color: #657786;
+            color: #495057;
             margin-right: 0.5rem;
         }
 
-        table a {
-            color: #2c3e50;
-            text-decoration: none;
-            font-weight: 500;
+        table.dataTable tbody td {
+            white-space: nowrap;
         }
 
-        table a:hover {
-            text-decoration: underline;
-        }
-
-        /* DataTables controls */
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-            font-size: 0.875rem;
-            color: #657786;
-        }
-
-        .dataTables_wrapper .dataTables_length select,
-        .dataTables_wrapper .dataTables_filter input {
-            border: 1px solid #e1e8ed;
-            border-radius: 6px;
-            padding: 0.375rem 0.75rem;
-            font-size: 0.875rem;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 0.375rem 0.75rem;
-            margin-left: 0.25rem;
-            border: 1px solid #e1e8ed;
-            border-radius: 6px;
-            color: #2c3e50 !important;
-            background: white;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: #fafafa !important;
-            border-color: #2c3e50 !important;
-            color: #2c3e50 !important;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: #2c3e50 !important;
-            color: white !important;
-            border-color: #2c3e50 !important;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
-            opacity: 0.4;
-        }
-
-        /* Legend */
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            padding: 1rem 0;
-            font-size: 0.875rem;
-            color: #657786;
-        }
-
-        /* Info sections */
-        .info-card {
-            background: white;
-            border: 1px solid #e1e8ed;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .info-card p {
-            margin: 0;
-            color: #657786;
-            font-size: 0.9375rem;
-            line-height: 1.7;
-        }
-
-        .info-card a {
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        /* Mobile Responsive */
+        /* Mobile specific */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
             .container {
                 padding: 15px;
             }
-
+            
             .container-fluid {
                 padding: 15px;
             }
-
-            .card, .info-card, .table-container {
-                padding: 1rem;
+            
+            .notebook-cell {
+                padding: 10px;
+                margin: 10px 0;
             }
-
-            .region-btn {
-                font-size: 0.8125rem;
-                padding: 0.4rem 0.75rem;
+            
+            .notebook-cell h1 {
+                font-size: 1.5rem;
             }
-
+            
+            .notebook-cell h2 {
+                font-size: 1.25rem;
+            }
+            
+            .region-btn, .btn {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+            
+            #advanced-filters .row {
+                margin: 0;
+            }
+            
+            #advanced-filters .col-md-3 {
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            
+            #advanced-filters label {
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            #advanced-filters input,
+            #advanced-filters select {
+                font-size: 0.875rem;
+            }
+            
             table.dataTable {
-                font-size: 0.8125rem;
+                font-size: 0.75rem;
             }
-
+            
             table.dataTable thead th,
             table.dataTable tbody td {
-                padding: 0.625rem 0.5rem;
+                padding: 6px 8px;
                 white-space: normal;
             }
-        }
-
-        /* Smooth transitions */
-        * {
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            
+            .dataTables_wrapper .dataTables_filter input,
+            .dataTables_wrapper .dataTables_length select {
+                font-size: 0.875rem;
+            }
+            
+            .dataTables_info,
+            .dataTables_paginate {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <h1>🏔️ Opotopo</h1>
-        </div>
-    </header>
-
-    <!-- Main Content -->
     <div class="container">
-        <!-- Region Filters -->
-        <div class="card">
-            <div class="filter-section">
-                <div class="filter-label">Région</div>
-                <div class="region-filters" id="region-filters"></div>
-            </div>
-
-            <div style="margin-top: 1rem;">
-                <button class="btn-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-filters">
-                    Filtres avancés
-                </button>
-                <button class="btn-reset" id="clear-all-filters">
-                    Réinitialiser
-                </button>
-            </div>
-
-            <!-- Advanced Filters -->
-            <div class="collapse" id="advanced-filters" style="margin-top: 1.5rem;">
-                <div class="row g-3">
-                    <div class="col-md-3 col-sm-6">
-                        <label>Altitude (m)</label>
-                        <input type="number" id="alt-min" placeholder="Min" class="form-control mb-2">
-                        <input type="number" id="alt-max" placeholder="Max" class="form-control">
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Niveau</label>
-                        <select id="niveau-select" class="form-select"></select>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Randonnée</label>
-                        <input type="text" id="rando-filter" placeholder="Rechercher" class="form-control">
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Temps max (min)</label>
-                        <input type="number" id="temps-max" placeholder="Max" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row g-3" style="margin-top: 0.5rem;">
-                    <div class="col-md-3 col-sm-6">
-                        <label>Dénivelé (m)</label>
-                        <input type="number" id="deniv-min" placeholder="Min" class="form-control mb-2">
-                        <input type="number" id="deniv-max" placeholder="Max" class="form-control">
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Distance (km)</label>
-                        <input type="number" id="dist-min" placeholder="Min" class="form-control mb-2">
-                        <input type="number" id="dist-max" placeholder="Max" class="form-control">
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Vallées</label>
-                        <input type="text" id="vallees-filter" placeholder="Rechercher" class="form-control">
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Équipement</label>
-                        <div class="form-check" style="margin-top: 0.5rem;">
-                            <input class="form-check-input" type="checkbox" id="piolet-check">
-                            <label class="form-check-label" for="piolet-check" style="text-transform: none;">Piolet requis</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="crampons-check">
-                            <label class="form-check-label" for="crampons-check" style="text-transform: none;">Crampons requis</label>
+        <div class="row">
+            <div class="col-12">
+                <div class="notebook-cell">
+                    <h1 class="text-center display-1 mb-4"><i class="fas fa-mountain text-primary me-2"></i>🏔️ Opotopo</h1>
+                    <div>
+                        <strong><i class="fas fa-filter me-1"></i>Région :</strong></br>
+                        <div id="region-filters" class="text-center mt-3">
+                            <!-- Les boutons de région seront ajoutés ici par JavaScript -->
                         </div>
                     </div>
-                </div>
-
-                <div class="row g-3" style="margin-top: 0.5rem;">
-                    <div class="col-md-3 col-sm-6">
-                        <label>Commentaires (min)</label>
-                        <input type="number" id="pop-min" placeholder="Min" class="form-control">
+                    <div class="mt-3">
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters">
+                            <i class="fas fa-sliders-h me-1"></i>Filtres avancés
+                        </button>
+                        <button class="btn btn-danger btn-sm ms-2" id="clear-all-filters">
+                            <i class="fas fa-times me-1"></i>Réinitialiser
+                        </button>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <label>Note</label>
-                        <input type="number" id="note-min" placeholder="Min" class="form-control mb-2" step="0.1">
-                        <input type="number" id="note-max" placeholder="Max" class="form-control" step="0.1">
+                    <div class="collapse mt-3" id="advanced-filters">
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Altitude (m)</label>
+                                    <input type="number" id="alt-min" placeholder="Min" class="form-control form-control-sm mb-2">
+                                    <input type="number" id="alt-max" placeholder="Max" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Niveau</label>
+                                    <select id="niveau-select" class="form-select form-select-sm"></select>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Randonnée</label>
+                                    <input type="text" id="rando-filter" placeholder="Filtrer" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Temps (min)</label>
+                                    <input type="number" id="temps-max" placeholder="Max" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Dénivelé (m)</label>
+                                    <input type="number" id="deniv-min" placeholder="Min" class="form-control form-control-sm mb-2">
+                                    <input type="number" id="deniv-max" placeholder="Max" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Distance (km)</label>
+                                    <input type="number" id="dist-min" placeholder="Min" class="form-control form-control-sm mb-2">
+                                    <input type="number" id="dist-max" placeholder="Max" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Vallées</label>
+                                    <input type="text" id="vallees-filter" placeholder="Filtrer" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Équipement</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="piolet-check">
+                                        <label class="form-check-label" for="piolet-check">Piolet requis</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="crampons-check">
+                                        <label class="form-check-label" for="crampons-check">Crampons requis</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>N commentaires (min)</label>
+                                    <input type="number" id="pop-min" placeholder="Min" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <label>Note</label>
+                                    <input type="number" id="note-min" placeholder="Min" class="form-control form-control-sm mb-2" step="0.1">
+                                    <input type="number" id="note-max" placeholder="Max" class="form-control form-control-sm" step="0.1">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Table -->
+    
     <div class="container-fluid">
-        <div class="table-container">
-            <table id="randonnees-table" class="display compact nowrap" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Altitude (m)</th>
-                        <th>Niveau</th>
-                        <th>Randonnée</th>
-                        <th>Temps</th>
-                        <th>Dénivelé (m)</th>
-                        <th>Distance (km)</th>
-                        <th>Région</th>
-                        <th>Vallées</th>
-                        <th>Piolet</th>
-                        <th>Crampons</th>
-                        <th>N coms</th>
-                        <th>Note</th>
-                        <th>URL</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="legend">
-            <strong>Niveaux:</strong>
-            <span>💡 Marcheur</span>
-            <span>👟 Randonneur</span>
-            <span>🥾 Montagnard</span>
-            <span>🧗 Grimpeur</span>
+        <div class="row">
+            <div class="col-12">
+                <table id="randonnees-table" class="display compact nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Altitude (m)</th>
+                            <th>Niveau</th>
+                            <th>Randonnée</th>
+                            <th>Temps</th>
+                            <th>Dénivelé (m)</th>
+                            <th>Distance (km)</th>
+                            <th>Région</th>
+                            <th>Vallées</th>
+                            <th>Piolet</th>
+                            <th>Crampons</th>
+                            <th>N coms</th>
+                            <th>Note</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les données seront insérées ici par JavaScript -->
+                    </tbody>
+                </table>
+                <p class="mt-3"><b>Niveaux :</b> 👡 marcheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur </p>
+            </div>
         </div>
     </div>
 
-    <!-- Info Sections -->
     <div class="container">
-        <div class="info-card">
-            <h2>Méthodologie</h2>
-            <p>
-                <strong>Note.</strong> La note d'une randonnée est basée sur les commentaires de celle-ci, elle se situe entre 0 et 4. 
-                Il faut avoir plus de 6 commentaires pour avoir une note. Cette borne de 6 correspond au premier quartile de la distribution 
-                du nombre de commentaires par topo. À chaque commentaire est associé une note selon le modèle de classification multi-lang 
-                <a href="https://huggingface.co/tabularisai/multilingual-sentiment-analysis" target="_blank">tabularisai</a>. 
-                Pour chaque randonnée, la note correspond à la moyenne des notes des commentaires plus ou moins l'écart-type.
-            </p>
-        </div>
-
-        <div class="info-card">
-            <h2>À propos</h2>
-            <p>
-                <a href="https://github.com/MatFrancois/opotopo" target="_blank">GitHub</a>
-            </p>
+        <div class="row">
+            <div class="col-12">
+                <div class="notebook-cell">
+                    <h2>Méthodologie</h2>
+                    <p>
+                        <b>Note.</b> La note d'une randonnée est basée sur les commentaires de celle ci, elle se situe entre 0 et 4. Il faut avoir plus de 6 commentaires pour avoir une note. Cette borne de 6 correspond au premier quartile de la distribution du nombre de commentaires par topo.
+                        A chaque commentaire est associé une note selon le modèle de classification multi-lang <a href="https://huggingface.co/tabularisai/multilingual-sentiment-analysis">tabularisai</a>. Pour chaque randonnée, la note correspond à la moyenne des notes des commentaires plus ou moins l'écart-type.
+                    </p>
+                </div>
+                <div class="notebook-cell">
+                    <h2>À propos</h2>
+                    <p><a href="https://github.com/MatFrancois/opotopo">git</a></p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -522,10 +302,10 @@
                         <td>${rando.kms}</td>
                         <td>${rando.regions}</td>
                         <td>${rando.vallees}</td>
-                        <td>${rando.piolet || ''}</td>
-                        <td>${rando.crampons || ''}</td>
+                        <td>${rando.piolet}</td>
+                        <td>${rando.crampons}</td>
                         <td>${rando.n_com}</td>
-                        <td>${rando.note ? rando.note.toFixed(1) : ''} ${rando.note_sd ? '± ' + rando.note_sd.toFixed(1) : ''}</td>
+                        <td>${rando.note ? rando.note.toFixed(1) : ''} ± ${rando.note_sd ? rando.note_sd.toFixed(1) : ''}</td>
                         <td><a href="${rando.url}" target="_blank">Lien</a></td>
                     `;
                     tbody.appendChild(row);
@@ -562,7 +342,7 @@
                         { responsivePriority: 12, targets: 9 }, // Crampons (minimisé)
                         { responsivePriority: 13, targets: 12 } // URL (minimisé)
                     ],
-                    pageLength: 25,
+                    pageLength: 10,
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
                     language: {
                         lengthMenu: "Afficher _MENU_ randonnées",
@@ -641,7 +421,7 @@
                 var regionFilters = $('#region-filters');
 
                 regions.forEach(function(region) {
-                    var button = $('<button class="region-btn">' + region + '</button>');
+                    var button = $('<button class="btn btn-outline-primary btn-sm me-1 mb-1 region-btn">' + region + '</button>');
                     button.click(function() {
                         var index = selectedRegions.indexOf(region);
                         if (index > -1) {
@@ -657,10 +437,10 @@
                     regionFilters.append(button);
                 });
 
-                var allButton = $('<button class="region-btn">Toutes</button>');
+                var allButton = $('<button class="btn btn-primary btn-sm me-1 mb-1">Tous</button>');
                 allButton.click(function() {
                     selectedRegions = [];
-                    $('.region-btn').removeClass('active');
+                    $('.btn-outline-primary').removeClass('active');
                     table.column(6).search('').draw();
                 });
                 regionFilters.append(allButton);
@@ -668,7 +448,7 @@
                 var niveaux = [...new Set(data.map(r => r.niveaux))].sort();
                 var niveauSelect = $('#niveau-select');
                 niveauSelect.empty();
-                niveauSelect.append('<option value="">Tous les niveaux</option>');
+                niveauSelect.append('<option value="">Tous niveaux</option>');
                 niveaux.forEach(function(niveau) {
                     niveauSelect.append('<option value="' + niveau + '">' + niveau + '</option>');
                 });
@@ -677,7 +457,7 @@
                     $('#advanced-filters input').val('');
                     $('#advanced-filters select').val('');
                     $('#advanced-filters input[type="checkbox"]').prop('checked', false);
-                    $('.region-btn').removeClass('active');
+                    $('.btn-outline-primary').removeClass('active');
                     selectedRegions = [];
                     table.search('').columns().search('').draw();
                     $.fn.dataTable.ext.search = [];
