@@ -3,229 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPOTOPO</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container-fluid {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px 40px;
-        }
-        .notebook-cell {
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .notebook-cell:hover {
-            transform: translateY(-2px);
-        }
-        .region-btn {
-            transition: all 0.3s;
-        }
-        .region-btn.active {
-            background-color: #007bff !important;
-            border-color: #007bff !important;
-            color: white !important;
-        }
-        .btn-primary {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-        .btn-primary:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
-
-        /* Responsive details styling */
-        table.dataTable tbody td.child {
-            background: #f8f9fa;
-            padding: 1rem;
-        }
-
-        table.dataTable tbody td.child ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        table.dataTable tbody td.child ul li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        table.dataTable tbody td.child ul li:last-child {
-            border-bottom: none;
-        }
-
-        table.dataTable tbody td.child span.dtr-title {
-            font-weight: 600;
-            color: #495057;
-            margin-right: 0.5rem;
-        }
-
-        table.dataTable tbody td {
-            white-space: nowrap;
-        }
-
-        /* Mobile specific */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .container-fluid {
-                padding: 15px;
-            }
-            
-            .notebook-cell {
-                padding: 10px;
-                margin: 10px 0;
-            }
-            
-            .notebook-cell h1 {
-                font-size: 1.5rem;
-            }
-            
-            .notebook-cell h2 {
-                font-size: 1.25rem;
-            }
-            
-            .region-btn, .btn {
-                font-size: 0.75rem;
-                padding: 0.25rem 0.5rem;
-            }
-            
-            #advanced-filters .row {
-                margin: 0;
-            }
-            
-            #advanced-filters .col-md-3 {
-                padding: 5px;
-                margin-bottom: 10px;
-            }
-            
-            #advanced-filters label {
-                font-size: 0.875rem;
-                margin-bottom: 0.25rem;
-            }
-            
-            #advanced-filters input,
-            #advanced-filters select {
-                font-size: 0.875rem;
-            }
-            
-            table.dataTable {
-                font-size: 0.75rem;
-            }
-            
-            table.dataTable thead th,
-            table.dataTable tbody td {
-                padding: 6px 8px;
-                white-space: normal;
-            }
-            
-            .dataTables_wrapper .dataTables_filter input,
-            .dataTables_wrapper .dataTables_length select {
-                font-size: 0.875rem;
-            }
-            
-            .dataTables_info,
-            .dataTables_paginate {
-                font-size: 0.75rem;
-            }
-        }
-    </style>
+    <meta name="description" content="OPOTOPO - Explorateur de randonnées en montagne avec filtres avancés">
+    <meta name="author" content="MatFrancois">
+    <meta name="keywords" content="randonnée, montagne, trekking, alpinisme, France">
+    
+    <title>OPOTOPO - Explorateur de Randonnées</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Styles externes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css">
+    
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="notebook-cell">
-                    <h1 class="text-center display-1 mb-4"><i class="fas fa-mountain text-primary me-2"></i>🏔️ Opotopo</h1>
-                    <div>
-                        <strong><i class="fas fa-filter me-1"></i>Région :</strong></br>
-                        <div id="region-filters" class="text-center mt-3">
-                            <!-- Les boutons de région seront ajoutés ici par JavaScript -->
+    <!-- En-tête et filtres -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="notebook-cell">
+                        <h1 class="text-center display-1 mb-4">
+                            🏔️ Opotopo
+                        </h1>
+                        
+                        <!-- Filtre par région -->
+                        <div class="mb-3">
+                            <strong>
+                                <i class="fas fa-filter me-1"></i>Région :
+                            </strong>
+                            <div id="region-filters" class="text-center mt-3">
+                                <!-- Les boutons de région seront ajoutés ici par JavaScript -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-3">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters">
-                            <i class="fas fa-sliders-h me-1"></i>Filtres avancés
-                        </button>
-                        <button class="btn btn-danger btn-sm ms-2" id="clear-all-filters">
-                            <i class="fas fa-times me-1"></i>Réinitialiser
-                        </button>
-                    </div>
-                    <div class="collapse mt-3" id="advanced-filters">
-                        <div class="card card-body">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Altitude (m)</label>
-                                    <input type="number" id="alt-min" placeholder="Min" class="form-control form-control-sm mb-2">
-                                    <input type="number" id="alt-max" placeholder="Max" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Niveau</label>
-                                    <select id="niveau-select" class="form-select form-select-sm"></select>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Randonnée</label>
-                                    <input type="text" id="rando-filter" placeholder="Filtrer" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Temps (min)</label>
-                                    <input type="number" id="temps-max" placeholder="Max" class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Dénivelé (m)</label>
-                                    <input type="number" id="deniv-min" placeholder="Min" class="form-control form-control-sm mb-2">
-                                    <input type="number" id="deniv-max" placeholder="Max" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Distance (km)</label>
-                                    <input type="number" id="dist-min" placeholder="Min" class="form-control form-control-sm mb-2">
-                                    <input type="number" id="dist-max" placeholder="Max" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Vallées</label>
-                                    <input type="text" id="vallees-filter" placeholder="Filtrer" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Équipement</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="piolet-check">
-                                        <label class="form-check-label" for="piolet-check">Piolet requis</label>
+                        
+                        <!-- Boutons de contrôle -->
+                        <div class="mt-3">
+                            <button class="btn btn-secondary btn-sm" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#advanced-filters" 
+                                    aria-expanded="false" 
+                                    aria-controls="advanced-filters">
+                                <i class="fas fa-sliders-h me-1"></i>Filtres avancés
+                            </button>
+                            <button class="btn btn-danger btn-sm ms-2" id="clear-all-filters">
+                                <i class="fas fa-times me-1"></i>Réinitialiser
+                            </button>
+                        </div>
+                        
+                        <!-- Filtres avancés (collapsible) -->
+                        <div class="collapse mt-3" id="advanced-filters">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="alt-min">Altitude (m)</label>
+                                        <input type="number" 
+                                               id="alt-min" 
+                                               placeholder="Min" 
+                                               class="form-control form-control-sm mb-2"
+                                               aria-label="Altitude minimum">
+                                        <input type="number" 
+                                               id="alt-max" 
+                                               placeholder="Max" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Altitude maximum">
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="crampons-check">
-                                        <label class="form-check-label" for="crampons-check">Crampons requis</label>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="niveau-select">Niveau</label>
+                                        <select id="niveau-select" 
+                                                class="form-select form-select-sm"
+                                                aria-label="Sélection du niveau">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="rando-filter">Randonnée</label>
+                                        <input type="text" 
+                                               id="rando-filter" 
+                                               placeholder="Filtrer" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Filtre par nom de randonnée">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="temps-max">Temps (min)</label>
+                                        <input type="number" 
+                                               id="temps-max" 
+                                               placeholder="Max" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Temps maximum">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>N commentaires (min)</label>
-                                    <input type="number" id="pop-min" placeholder="Min" class="form-control form-control-sm">
+                                <div class="row mt-3">
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="deniv-min">Dénivelé (m)</label>
+                                        <input type="number" 
+                                               id="deniv-min" 
+                                               placeholder="Min" 
+                                               class="form-control form-control-sm mb-2"
+                                               aria-label="Dénivelé minimum">
+                                        <input type="number" 
+                                               id="deniv-max" 
+                                               placeholder="Max" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Dénivelé maximum">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="dist-min">Distance (km)</label>
+                                        <input type="number" 
+                                               id="dist-min" 
+                                               placeholder="Min" 
+                                               class="form-control form-control-sm mb-2"
+                                               aria-label="Distance minimum">
+                                        <input type="number" 
+                                               id="dist-max" 
+                                               placeholder="Max" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Distance maximum">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="vallees-filter">Vallées</label>
+                                        <input type="text" 
+                                               id="vallees-filter" 
+                                               placeholder="Filtrer" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Filtre par vallée">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label>Équipement</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" 
+                                                   type="checkbox" 
+                                                   id="piolet-check">
+                                            <label class="form-check-label" for="piolet-check">
+                                                Piolet requis
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" 
+                                                   type="checkbox" 
+                                                   id="crampons-check">
+                                            <label class="form-check-label" for="crampons-check">
+                                                Crampons requis
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6 col-12">
-                                    <label>Note</label>
-                                    <input type="number" id="note-min" placeholder="Min" class="form-control form-control-sm mb-2" step="0.1">
-                                    <input type="number" id="note-max" placeholder="Max" class="form-control form-control-sm" step="0.1">
+                                <div class="row mt-3">
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="pop-min">N commentaires (min)</label>
+                                        <input type="number" 
+                                               id="pop-min" 
+                                               placeholder="Min" 
+                                               class="form-control form-control-sm"
+                                               aria-label="Nombre minimum de commentaires">
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-12">
+                                        <label for="note-min">Note</label>
+                                        <input type="number" 
+                                               id="note-min" 
+                                               placeholder="Min" 
+                                               class="form-control form-control-sm mb-2" 
+                                               step="0.1"
+                                               aria-label="Note minimum">
+                                        <input type="number" 
+                                               id="note-max" 
+                                               placeholder="Max" 
+                                               class="form-control form-control-sm" 
+                                               step="0.1"
+                                               aria-label="Note maximum">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -233,237 +185,94 @@
                 </div>
             </div>
         </div>
-    </div>
+    </header>
     
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <table id="randonnees-table" class="display compact nowrap" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Altitude (m)</th>
-                            <th>Niveau</th>
-                            <th>Randonnée</th>
-                            <th>Temps</th>
-                            <th>Dénivelé (m)</th>
-                            <th>Distance (km)</th>
-                            <th>Région</th>
-                            <th>Vallées</th>
-                            <th>Piolet</th>
-                            <th>Crampons</th>
-                            <th>N coms</th>
-                            <th>Note</th>
-                            <th>URL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Les données seront insérées ici par JavaScript -->
-                    </tbody>
-                </table>
-                <p class="mt-3"><b>Niveaux :</b> 👡 marcheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="notebook-cell">
-                    <h2>Méthodologie</h2>
-                    <p>
-                        <b>Note.</b> La note d'une randonnée est basée sur les commentaires de celle ci, elle se situe entre 0 et 4. Il faut avoir plus de 6 commentaires pour avoir une note. Cette borne de 6 correspond au premier quartile de la distribution du nombre de commentaires par topo.
-                        A chaque commentaire est associé une note selon le modèle de classification multi-lang <a href="https://huggingface.co/tabularisai/multilingual-sentiment-analysis">tabularisai</a>. Pour chaque randonnée, la note correspond à la moyenne des notes des commentaires plus ou moins l'écart-type.
+    <!-- Table des randonnées -->
+    <main>
+    <!-- Table des randonnées -->
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <table id="randonnees-table" class="display compact nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Altitude (m)</th>
+                                <th>Niveau</th>
+                                <th>Randonnée</th>
+                                <th>Temps</th>
+                                <th>Dénivelé (m)</th>
+                                <th>Distance (km)</th>
+                                <th>Région</th>
+                                <th>Vallées</th>
+                                <th>Piolet</th>
+                                <th>Crampons</th>
+                                <th>N coms</th>
+                                <th>Note</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Les données seront insérées ici par JavaScript -->
+                        </tbody>
+                    </table>
+                    <p class="mt-3">
+                        <b>Niveaux :</b> 👡 marcheur | 👟 randonneur | 🥾 montagnard | 🧗 grimpeur
                     </p>
                 </div>
-                <div class="notebook-cell">
-                    <h2>À propos</h2>
-                    <p><a href="https://github.com/MatFrancois/opotopo">git</a></p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Pied de page -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="notebook-cell">
+                        <h2>Méthodologie</h2>
+                        <p>
+                            <b>Note.</b> La note d'une randonnée est basée sur les commentaires de celle-ci, 
+                            elle se situe entre 0 et 4. Il faut avoir plus de 6 commentaires pour avoir une note. 
+                            Cette borne de 6 correspond au premier quartile de la distribution du nombre de 
+                            commentaires par topo. À chaque commentaire est associée une note selon le modèle 
+                            de classification multi-lang 
+                            <a href="https://huggingface.co/tabularisai/multilingual-sentiment-analysis" 
+                               target="_blank" 
+                               rel="noopener noreferrer">tabularisai</a>. 
+                            Pour chaque randonnée, la note correspond à la moyenne des notes des commentaires 
+                            plus ou moins l'écart-type.
+                        </p>
+                    </div>
+                    <div class="notebook-cell">
+                        <h2>À propos</h2>
+                        <p>
+                            <a href="https://github.com/MatFrancois/opotopo" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Code source sur GitHub
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <script>
-        var table;
-        var selectedRegions = [];
-
-        fetch('randonnees_enrich.json')
-            .then(response => response.json())
-            .then(data => {
-                const tbody = document.querySelector('#randonnees-table tbody');
-                data.forEach(rando => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${rando.alt}</td>
-                        <td>${rando.niveaux}</td>
-                        <td>${rando.randonnee}</td>
-                        <td>${rando.temps_minute}</td>
-                        <td>${rando.deniv}</td>
-                        <td>${rando.kms}</td>
-                        <td>${rando.regions}</td>
-                        <td>${rando.vallees}</td>
-                        <td>${rando.piolet}</td>
-                        <td>${rando.crampons}</td>
-                        <td>${rando.n_com}</td>
-                        <td>${rando.note ? rando.note.toFixed(1) : ''} ± ${rando.note_sd ? rando.note_sd.toFixed(1) : ''}</td>
-                        <td><a href="${rando.url}" target="_blank">Lien</a></td>
-                    `;
-                    tbody.appendChild(row);
-                });
-
-                table = $('#randonnees-table').DataTable({
-                    responsive: {
-                        details: {
-                            type: 'column',
-                            target: 'tr'
-                        }
-                    },
-                    paging: true,
-                    searching: true,
-                    ordering: true,
-                    info: true,
-                    scrollX: true,
-                    autoWidth: true,
-                    columnDefs: [
-                        { targets: 6, visible: false },
-                        // { targets: 2, width: '25%' },
-                        // { targets: 11, width: '120px' },
-                        // { targets: 12, width: '80px' },
-                        { responsivePriority: 1, targets: 1 },  // Niveau
-                        { responsivePriority: 1, targets: 2 },  // Randonnée
-                        { responsivePriority: 1, targets: 4 },  // Dénivelé
-                        { responsivePriority: 1, targets: 5 },  // Distance
-                        { responsivePriority: 1, targets: 11 }, // Note
-                        { responsivePriority: 2, targets: 3 },  // Temps
-                        { responsivePriority: 3, targets: 0 },  // Altitude
-                        { responsivePriority: 3, targets: 10 }, // N coms
-                        { responsivePriority: 10, targets: 7 }, // Vallées (minimisé)
-                        { responsivePriority: 11, targets: 8 }, // Piolet (minimisé)
-                        { responsivePriority: 12, targets: 9 }, // Crampons (minimisé)
-                        { responsivePriority: 13, targets: 12 } // URL (minimisé)
-                    ],
-                    pageLength: 10,
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
-                    language: {
-                        lengthMenu: "Afficher _MENU_ randonnées",
-                        zeroRecords: "Aucune randonnée trouvée",
-                        info: "Page _PAGE_ sur _PAGES_",
-                        infoEmpty: "Aucune randonnée disponible",
-                        infoFiltered: "(filtré de _MAX_ randonnées)",
-                        search: "Rechercher:",
-                        paginate: {
-                            first: "Premier",
-                            last: "Dernier",
-                            next: "Suivant",
-                            previous: "Précédent"
-                        }
-                    }
-                });
-
-                function applyFilters() {
-                    var altMin = parseFloat($('#alt-min').val()) || -Infinity;
-                    var altMax = parseFloat($('#alt-max').val()) || Infinity;
-                    $.fn.dataTable.ext.search.push(
-                        function(settings, data, dataIndex) {
-                            var alt = parseFloat(data[0]) || 0;
-                            if (alt < altMin || alt > altMax) return false;
-
-                            var tempsMax = parseFloat($('#temps-max').val()) || Infinity;
-                            var temps = parseFloat(data[3]) || 0;
-                            if (temps > tempsMax) return false;
-
-                            var denivMin = parseFloat($('#deniv-min').val()) || -Infinity;
-                            var denivMax = parseFloat($('#deniv-max').val()) || Infinity;
-                            var deniv = parseFloat(data[4]) || 0;
-                            if (deniv < denivMin || deniv > denivMax) return false;
-
-                            var distMin = parseFloat($('#dist-min').val()) || -Infinity;
-                            var distMax = parseFloat($('#dist-max').val()) || Infinity;
-                            var dist = parseFloat(data[5]) || 0;
-                            if (dist < distMin || dist > distMax) return false;
-
-                            var pioletChecked = $('#piolet-check').is(':checked');
-                            if (pioletChecked && !data[8]) return false;
-
-                            var cramponsChecked = $('#crampons-check').is(':checked');
-                            if (cramponsChecked && !data[9]) return false;
-
-                            var popMin = parseFloat($('#pop-min').val()) || -Infinity;
-                            var pop = parseFloat(data[10]) || 0;
-                            if (pop < popMin) return false;
-
-                            var noteMin = parseFloat($('#note-min').val()) || -Infinity;
-                            var noteMax = parseFloat($('#note-max').val()) || Infinity;
-                            var noteStr = data[11].split(' ±')[0];
-                            var note = parseFloat(noteStr) || 0;
-                            if (note < noteMin || note > noteMax) return false;
-
-                            return true;
-                        }
-                    );
-
-                    var niveau = $('#niveau-select').val();
-                    table.column(1).search(niveau);
-
-                    var rando = $('#rando-filter').val();
-                    table.column(2).search(rando);
-
-                    var vallees = $('#vallees-filter').val();
-                    table.column(7).search(vallees);
-
-                    table.draw();
-                    $.fn.dataTable.ext.search.pop();
-                }
-
-                $('#advanced-filters input, #advanced-filters select').on('input change', applyFilters);
-
-                var regions = [...new Set(data.map(r => r.regions))].sort();
-                var regionFilters = $('#region-filters');
-
-                regions.forEach(function(region) {
-                    var button = $('<button class="btn btn-outline-primary btn-sm me-1 mb-1 region-btn">' + region + '</button>');
-                    button.click(function() {
-                        var index = selectedRegions.indexOf(region);
-                        if (index > -1) {
-                            selectedRegions.splice(index, 1);
-                            $(this).removeClass('active');
-                        } else {
-                            selectedRegions.push(region);
-                            $(this).addClass('active');
-                        }
-                        var searchTerm = selectedRegions.length ? selectedRegions.join('|') : '';
-                        table.column(6).search(searchTerm, true, false).draw();
-                    });
-                    regionFilters.append(button);
-                });
-
-                var allButton = $('<button class="btn btn-primary btn-sm me-1 mb-1">Tous</button>');
-                allButton.click(function() {
-                    selectedRegions = [];
-                    $('.btn-outline-primary').removeClass('active');
-                    table.column(6).search('').draw();
-                });
-                regionFilters.append(allButton);
-
-                var niveaux = [...new Set(data.map(r => r.niveaux))].sort();
-                var niveauSelect = $('#niveau-select');
-                niveauSelect.empty();
-                niveauSelect.append('<option value="">Tous niveaux</option>');
-                niveaux.forEach(function(niveau) {
-                    niveauSelect.append('<option value="' + niveau + '">' + niveau + '</option>');
-                });
-
-                $('#clear-all-filters').click(function() {
-                    $('#advanced-filters input').val('');
-                    $('#advanced-filters select').val('');
-                    $('#advanced-filters input[type="checkbox"]').prop('checked', false);
-                    $('.btn-outline-primary').removeClass('active');
-                    selectedRegions = [];
-                    table.search('').columns().search('').draw();
-                    $.fn.dataTable.ext.search = [];
-                });
-            })
-            .catch(error => console.error('Erreur lors du chargement du JSON:', error));
-    </script>
+    <!-- Scripts externes -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
+    
+    <!-- Scripts de l'application -->
+    <script src="js/config.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

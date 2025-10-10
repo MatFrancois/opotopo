@@ -1,0 +1,209 @@
+/* ===========================
+   Variables globales
+   =========================== */
+:root {
+    --primary-color: #28a745;
+    --primary-hover: #218838;
+    --primary-border: #1e7e34;
+    --secondary-color: #007bff;
+    --text-color: #495057;
+    --border-color: #dee2e6;
+    --bg-light: #f8f9fa;
+    --transition-speed: 0.3s;
+}
+
+/* ===========================
+   Styles de base
+   =========================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* ===========================
+   Conteneurs
+   =========================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container-fluid {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+/* ===========================
+   Composants notebook
+   =========================== */
+.notebook-cell {
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* ===========================
+   Boutons
+   =========================== */
+.region-btn {
+    transition: all var(--transition-speed);
+}
+
+.region-btn.active {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-border);
+}
+
+/* ===========================
+   DataTables responsive
+   =========================== */
+table.dataTable tbody td.child {
+    background: var(--bg-light);
+    padding: 1rem;
+}
+
+table.dataTable tbody td.child ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+table.dataTable tbody td.child ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table.dataTable tbody td.child ul li:last-child {
+    border-bottom: none;
+}
+
+table.dataTable tbody td.child span.dtr-title {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-right: 0.5rem;
+}
+
+table.dataTable tbody td {
+    white-space: nowrap;
+}
+
+/* ===========================
+   Media queries - Mobile
+   =========================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .container-fluid {
+        padding: 15px;
+    }
+    
+    .notebook-cell {
+        padding: 10px;
+        margin: 10px 0;
+    }
+    
+    .notebook-cell h1 {
+        font-size: 1.5rem;
+    }
+    
+    .notebook-cell h2 {
+        font-size: 1.25rem;
+    }
+    
+    .region-btn, 
+    .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    /* Filtres avancés */
+    #advanced-filters .row {
+        margin: 0;
+    }
+    
+    #advanced-filters .col-md-3 {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    #advanced-filters label {
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    #advanced-filters input,
+    #advanced-filters select {
+        font-size: 0.875rem;
+    }
+    
+    /* Table responsive */
+    table.dataTable {
+        font-size: 0.75rem;
+    }
+    
+    table.dataTable thead th,
+    table.dataTable tbody td {
+        padding: 6px 8px;
+        white-space: normal;
+    }
+    
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select {
+        font-size: 0.875rem;
+    }
+    
+    .dataTables_info,
+    .dataTables_paginate {
+        font-size: 0.75rem;
+    }
+}
+
+/* ===========================
+   Utilitaires
+   =========================== */
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.me-1 {
+    margin-right: 0.25rem;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}
