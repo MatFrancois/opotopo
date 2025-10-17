@@ -9,6 +9,7 @@
     
     <title>OPOTOPO - Explorateur de Randonnées</title>
     <script src="https://unpkg.com/maplibre-gl@^5.9.0/dist/maplibre-gl.js"></script>
+    <script src="https://loc8.us/maplibre-gl-vector-text-protocol/dist/maplibre-gl-vector-text-protocol.js"></script>
     <link href="https://unpkg.com/maplibre-gl@^5.9.0/dist/maplibre-gl.css" rel="stylesheet" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -266,7 +267,43 @@
                     });
                     
                     // Ajouter les contrôles de navigation
+                    VectorTextProtocol.addProtocols(maplibregl);
                     map.addControl(new maplibregl.NavigationControl(), 'top-right');
+                    map.on("load", () => {
+                        // map.addSource("toto", {
+                        //     type: "gpx",
+                        //     data:"0/Trace-Gps-Pic-Aneto-aller-retour-2015.gpx"
+                        // });
+                    //   map.addLayer({
+                    //     id: "us-congress-113-fill",
+                    //     type: "fill",
+                    //     source: "us-congress-113",
+                    //     minzoom: 0,
+                    //     maxzoom: 20,
+                    //     paint: {
+                    //     "fill-opacity": 0.25,
+                    //     "fill-color": "yellow",
+                    //     "fill-outline-color": "gray"
+                    //     }
+                    // });
+                        const gpxLink = 'gpx://https://www.topopyrenees.com/wp-content/uploads/2005/02/Hautes-Pyrenees-3298m-G-Vignemale-Barrage-Ossoue.gpx';
+                        map.addSource('gpxSourceName', {
+                            'type': 'geojson',
+                            'data': gpxLink,
+                        });
+                        map.addLayer({
+                            'id': "gpx" + 'gpxSourceName',
+                            'type': 'line',
+                            'source': 'gpxSourceName',
+                            'minzoom': 0,
+                            'maxzoom': 20,
+                            'paint': {
+                            'line-color': 'red',
+                            'line-width': 5
+                            }
+                        });
+                    });
+
                 </script>
             </div>
         </div>
