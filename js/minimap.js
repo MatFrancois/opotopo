@@ -31,7 +31,7 @@
 
         try {
             // Remove all existing GPX layers and sources
-            currentGpxLayers.forEach(({ layerId, sourceId, hoverLayerId }) => {
+            currentGpxLayers.forEach(({ layerId, sourceId, hoverLayerId, outlineLayerId }) => {
                 // Remove hover layer if it exists
                 if (hoverLayerId && map.getLayer(hoverLayerId)) {
                     map.removeLayer(hoverLayerId);
@@ -39,6 +39,10 @@
                 // Remove main layer
                 if (map.getLayer(layerId)) {
                     map.removeLayer(layerId);
+                }
+                // Remove outline layer if it exists
+                if (outlineLayerId && map.getLayer(outlineLayerId)) {
+                    map.removeLayer(outlineLayerId);
                 }
                 // Remove source
                 if (map.getSource(sourceId)) {
@@ -91,6 +95,20 @@
                         data: proxied
                     });
 
+                    // Add black outline layer first (drawn underneath)
+                    const outlineLayerId = layerId + '_outline';
+                    map.addLayer({
+                        id: outlineLayerId,
+                        type: 'line',
+                        source: sourceId,
+                        paint: {
+                            'line-color': '#000000',
+                            'line-width': 7,
+                            'line-opacity': 0.6
+                        }
+                    });
+
+                    // Add main colored layer on top
                     map.addLayer({
                         id: layerId,
                         type: 'line',
@@ -120,12 +138,14 @@
                         map.getCanvas().style.cursor = 'pointer';
                         map.setPaintProperty(hoverLayerId, 'line-opacity', 0.4);
                         map.setPaintProperty(layerId, 'line-width', 7);
+                        map.setPaintProperty(outlineLayerId, 'line-width', 9); // Increase outline on hover
                     });
 
                     map.on('mouseleave', layerId, () => {
                         map.getCanvas().style.cursor = '';
                         map.setPaintProperty(hoverLayerId, 'line-opacity', 0);
                         map.setPaintProperty(layerId, 'line-width', 5);
+                        map.setPaintProperty(outlineLayerId, 'line-width', 7); // Reset outline
                     });
 
                     // Add click interaction to show popup with hike info
@@ -151,7 +171,7 @@
                             .addTo(map);
                     });
 
-                    currentGpxLayers.push({ layerId, sourceId, hoverLayerId });
+                    currentGpxLayers.push({ layerId, sourceId, hoverLayerId, outlineLayerId });
                     added++;
                 } catch (e) {
                     console.warn('Erreur en ajoutant la source/layer pour rid', rid, e);
