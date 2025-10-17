@@ -34,6 +34,16 @@ class TableManager {
 
         this.data.forEach((rando) => {
             const row = document.createElement('tr');
+            // expose the rid on the row for other modules (minimap)
+            // console.log(rando.rid)
+            // console.log('cc')
+            if (rando.rid !== undefined) {
+                row.dataset.rid = rando.rid;
+            }
+            // Store key info in data attributes for minimap popup
+            row.dataset.randonnee = rando.randonnee || '';
+            row.dataset.kms = rando.kms || '';
+            row.dataset.deniv = rando.deniv || '';
             row.innerHTML = `
                 <td>${rando.alt}</td>
                 <td>${rando.niveaux}</td>

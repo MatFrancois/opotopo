@@ -19,6 +19,16 @@
         console.log('Initialisation de DataTables...');
         const table = tableManager.initializeDataTable();
         
+        // Listen to DataTables events to update minimap when table changes
+        table.on('draw.dt', function() {
+            // 'draw' event fires after pagination, filtering, or sorting
+            console.log('Table updated - refreshing GPX tracks...');
+            if (typeof window.updateMinimapGpx === 'function') {
+                // Small delay to ensure DOM is updated
+                setTimeout(() => window.updateMinimapGpx(), 100);
+            }
+        });
+        
         // Initialise le gestionnaire de filtres
         const filterManager = new FilterManager(table);
         

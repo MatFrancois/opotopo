@@ -232,6 +232,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="notebook-cell">
+                        <div id="map" style="height: 600px; width: 80%; margin: 20px auto 0 auto;"></div>
+                    </div>
+                    <div class="notebook-cell">
                         <h2>Méthodologie</h2>
                         <p>
                             <b>Note.</b> La note d'une randonnée est basée sur les commentaires de celle-ci, 
@@ -257,54 +260,6 @@
                         </p>
                     </div>
                 </div>
-                <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
-                <script>
-                    var map = new maplibregl.Map({
-                        container: 'map', // container id
-                        style: 'https://demotiles.maplibre.org/style.json', // style URL
-                        center: [0.5, 42.8], // starting position [lng, lat] - Pyrénées
-                        zoom: 7 // starting zoom
-                    });
-                    
-                    // Ajouter les contrôles de navigation
-                    VectorTextProtocol.addProtocols(maplibregl);
-                    map.addControl(new maplibregl.NavigationControl(), 'top-right');
-                    map.on("load", () => {
-                        // map.addSource("toto", {
-                        //     type: "gpx",
-                        //     data:"0/Trace-Gps-Pic-Aneto-aller-retour-2015.gpx"
-                        // });
-                    //   map.addLayer({
-                    //     id: "us-congress-113-fill",
-                    //     type: "fill",
-                    //     source: "us-congress-113",
-                    //     minzoom: 0,
-                    //     maxzoom: 20,
-                    //     paint: {
-                    //     "fill-opacity": 0.25,
-                    //     "fill-color": "yellow",
-                    //     "fill-outline-color": "gray"
-                    //     }
-                    // });
-                        const gpxLink = 'gpx://https://www.topopyrenees.com/wp-content/uploads/2005/02/Hautes-Pyrenees-3298m-G-Vignemale-Barrage-Ossoue.gpx';
-                        map.addSource('gpxSourceName', {
-                            'type': 'geojson',
-                            'data': gpxLink,
-                        });
-                        map.addLayer({
-                            'id': "gpx" + 'gpxSourceName',
-                            'type': 'line',
-                            'source': 'gpxSourceName',
-                            'minzoom': 0,
-                            'maxzoom': 20,
-                            'paint': {
-                            'line-color': 'red',
-                            'line-width': 5
-                            }
-                        });
-                    });
-
-                </script>
             </div>
         </div>
     </footer>
@@ -324,5 +279,7 @@
     <script src="js/table.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/main.js"></script>
+    <!-- Minimap must load after table is populated -->
+    <script src="js/minimap.js"></script>
 </body>
 </html>
